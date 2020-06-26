@@ -55,4 +55,8 @@ public class ControladorVehiculo {
 	    }
     }
     
+    public List<Vehiculo> listar(){
+	return vehiculoDAO.findAll();
+    }
+    
 }

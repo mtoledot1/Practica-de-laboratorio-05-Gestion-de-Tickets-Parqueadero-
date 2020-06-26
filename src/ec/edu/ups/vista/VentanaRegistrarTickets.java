@@ -5,17 +5,41 @@
  */
 package ec.edu.ups.vista;
 
+import ec.edu.ups.controlador.ControladorTicket;
+import ec.edu.ups.modelo.Ticket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author tano
  */
 public class VentanaRegistrarTickets extends javax.swing.JInternalFrame {
+    
+    private VentanaPrincipal ventanaPrincipal;
+    private VentanaRegistroIngreso registroIngreso;
+    private VentanaRegistroSalida registroSalida;
+    private ControladorTicket controladorTicket;
+    private DateFormat dia;
+    private DateFormat hora;
 
-    /**
-     * Creates new form VentanaRegistrarTickets
-     */
-    public VentanaRegistrarTickets() {
+    public VentanaRegistrarTickets(ControladorTicket controladorTicket) {
 	initComponents();
+	this.controladorTicket = controladorTicket;
+	dia = new SimpleDateFormat("yyyy/MM/dd");
+	hora = new SimpleDateFormat("HH:mm");
+	btnSalida.setEnabled(false);
+	controladorTicket.verTicketsVehiculo((DefaultTableModel) tablaTickets.getModel());
+	setSize(650, 500);
+	setTitle("Tickets");
+    }
+    
+    public void setVentanaPrincipal(VentanaPrincipal ventanaPrincipal){
+	this.ventanaPrincipal = ventanaPrincipal;
+	registroIngreso = ventanaPrincipal.getRegistroIngreso();
+	registroSalida = ventanaPrincipal.getRegistroSalida();
     }
 
     /**
@@ -27,21 +51,261 @@ public class VentanaRegistrarTickets extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tablaTickets = new javax.swing.JTable() {
+            public boolean editCellAt(int row, int column, java.util.EventObject e){
+                return false;
+            }
+        };
+        lblPlaca = new javax.swing.JLabel();
+        lblModelo = new javax.swing.JLabel();
+        lblCedula = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblFecha = new javax.swing.JLabel();
+        lblHora = new javax.swing.JLabel();
+        txtModelo = new javax.swing.JTextField();
+        txtCedula = new javax.swing.JTextField();
+        txtNombre = new javax.swing.JTextField();
+        txtFecha = new javax.swing.JTextField();
+        txtHora = new javax.swing.JTextField();
+        btnSalida = new javax.swing.JButton();
+        btnIngreso = new javax.swing.JButton();
+        btnCancelar = new javax.swing.JButton();
+        txtPlaca = new javax.swing.JFormattedTextField();
+
+        setClosable(true);
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameClosed(evt);
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
+
+        tablaTickets.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Código", "Placa", "Modelo", "Cédula", "Nombre"
+            }
+        ) {
+            Class[] types = new Class [] {
+                java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class, java.lang.String.class
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
+        });
+        tablaTickets.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tablaTicketsMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tablaTickets);
+
+        lblPlaca.setText("Placa");
+
+        lblModelo.setText("Modelo");
+
+        lblCedula.setText("Cédula");
+
+        lblNombre.setText("Nombre");
+
+        lblFecha.setText("Fecha Ingreso");
+
+        lblHora.setText("Hora Ingreso");
+
+        btnSalida.setText("Registrar Salida");
+        btnSalida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalidaActionPerformed(evt);
+            }
+        });
+
+        btnIngreso.setText("Registrar Entrada");
+        btnIngreso.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIngresoActionPerformed(evt);
+            }
+        });
+
+        btnCancelar.setText("Cancelar");
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+
+        try {
+            txtPlaca.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("UUU-####")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 394, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(32, 32, 32)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addComponent(lblHora)
+                                .addComponent(lblPlaca, javax.swing.GroupLayout.Alignment.LEADING))
+                            .addComponent(lblModelo)
+                            .addComponent(lblCedula)
+                            .addComponent(lblNombre)
+                            .addComponent(lblFecha))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtModelo)
+                            .addComponent(txtCedula)
+                            .addComponent(txtNombre)
+                            .addComponent(txtFecha)
+                            .addComponent(txtHora)
+                            .addComponent(txtPlaca))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(20, 20, 20)
+                        .addComponent(btnSalida)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 55, Short.MAX_VALUE)
+                        .addComponent(btnCancelar)
+                        .addGap(30, 30, 30))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnIngreso)
+                        .addGap(65, 65, 65)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 378, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 274, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(57, 57, 57)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblPlaca)
+                    .addComponent(txtPlaca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblModelo)
+                    .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblCedula)
+                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblFecha)
+                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblHora)
+                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(27, 27, 27)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSalida)
+                    .addComponent(btnCancelar))
+                .addGap(39, 39, 39)
+                .addComponent(btnIngreso)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 451, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnSalidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalidaActionPerformed
+	hide();
+	ventanaPrincipal.getDesktopPane().remove(registroSalida);
+	ventanaPrincipal.getDesktopPane().add(registroSalida);
+	registroSalida.datos((int) tablaTickets.getValueAt(tablaTickets.getSelectedRow(), 0));
+	registroSalida.setVisible(true);
+    }//GEN-LAST:event_btnSalidaActionPerformed
+
+    private void btnIngresoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresoActionPerformed
+        hide();
+	ventanaPrincipal.getDesktopPane().remove(registroIngreso);
+	ventanaPrincipal.getDesktopPane().add(registroIngreso);
+	registroIngreso.setVisible(true);
+    }//GEN-LAST:event_btnIngresoActionPerformed
+
+    private void tablaTicketsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaTicketsMouseClicked
+        if(evt.getClickCount() == 2 && !evt.isConsumed()){
+	    evt.consume();
+	    int codigo = (int) tablaTickets.getValueAt(tablaTickets.getSelectedRow(), 0);
+	    Ticket ticket = controladorTicket.verTicket(codigo);
+	    txtPlaca.setValue(ticket.getVehiculo().getPlaca());
+	    txtModelo.setText(ticket.getVehiculo().getModelo());
+	    txtCedula.setText(ticket.getVehiculo().getPropietario().getCedula());
+	    txtNombre.setText(ticket.getVehiculo().getPropietario().getNombre());
+	    txtFecha.setText(ticket.getFechaIngreso().format(DateTimeFormatter.ISO_LOCAL_DATE));
+	    txtHora.setText(ticket.getFechaIngreso().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
+	    btnSalida.setEnabled(true);
+	}
+    }//GEN-LAST:event_tablaTicketsMouseClicked
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+	dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
+        limpiar();
+    }//GEN-LAST:event_formInternalFrameClosed
+
+    public void actualizar(int o){
+	if(o == 0)
+	    controladorTicket.verTicketsVehiculo((DefaultTableModel) tablaTickets.getModel());
+	else
+	    controladorTicket.verTicketsIngresos((DefaultTableModel) tablaTickets.getModel());
+    }
+    
+    public void limpiar(){
+	txtPlaca.setText("");
+	txtModelo.setText("");
+	txtCedula.setText("");
+	txtNombre.setText("");
+	txtFecha.setText("");
+	txtHora.setText("");
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnIngreso;
+    private javax.swing.JButton btnSalida;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCedula;
+    private javax.swing.JLabel lblFecha;
+    private javax.swing.JLabel lblHora;
+    private javax.swing.JLabel lblModelo;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblPlaca;
+    private javax.swing.JTable tablaTickets;
+    private javax.swing.JTextField txtCedula;
+    private javax.swing.JTextField txtFecha;
+    private javax.swing.JTextField txtHora;
+    private javax.swing.JTextField txtModelo;
+    private javax.swing.JTextField txtNombre;
+    private javax.swing.JFormattedTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
 }

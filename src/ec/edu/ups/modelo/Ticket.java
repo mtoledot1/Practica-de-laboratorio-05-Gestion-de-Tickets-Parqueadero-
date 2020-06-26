@@ -1,20 +1,19 @@
 package ec.edu.ups.modelo;
 
-import java.util.Calendar;
-import java.util.Calendar;
+import java.time.LocalDateTime;
 
 public class Ticket implements Comparable<Ticket>{
     
     private int numero;
-    private Calendar fechaIngreso;
-    private Calendar fechaSalida;
+    private LocalDateTime fechaIngreso;
+    private LocalDateTime fechaSalida;
     private double total;
     private Vehiculo vehiculo;
 
     public Ticket() {
     }
 
-    public Ticket(int numero, Calendar fechaIngreso, Calendar fechaSalida, double total, Vehiculo vehiculo) {
+    public Ticket(int numero, LocalDateTime fechaIngreso, LocalDateTime fechaSalida, double total, Vehiculo vehiculo) {
 	this.numero = numero;
 	this.fechaIngreso = fechaIngreso;
 	this.fechaSalida = fechaSalida;
@@ -30,19 +29,19 @@ public class Ticket implements Comparable<Ticket>{
 	this.numero = numero;
     }
 
-    public Calendar getFechaIngreso() {
+    public LocalDateTime getFechaIngreso() {
 	return fechaIngreso;
     }
 
-    public void setFechaIngreso(Calendar fechaIngreso) {
+    public void setFechaIngreso(LocalDateTime fechaIngreso) {
 	this.fechaIngreso = fechaIngreso;
     }
 
-    public Calendar getFechaSalida() {
+    public LocalDateTime getFechaSalida() {
 	return fechaSalida;
     }
 
-    public void setFechaSalida(Calendar fechaSalida) {
+    public void setFechaSalida(LocalDateTime fechaSalida) {
 	this.fechaSalida = fechaSalida;
     }
 
@@ -65,14 +64,6 @@ public class Ticket implements Comparable<Ticket>{
     @Override
     public String toString() {
 	return "Ticket{" + "numero=" + numero + ", fechaIngreso=" + fechaIngreso + ", fechaSalida=" + fechaSalida + ", total=" + total + ", vehiculo=" + vehiculo + '}';
-    }
-    
-    public void calcularTotal(){
-	double minutos = fechaSalida.get(Calendar.MINUTE)-fechaIngreso.get(Calendar.MINUTE);
-	minutos += (fechaSalida.get(Calendar.SECOND)-fechaIngreso.get(Calendar.SECOND))/60;
-	minutos += (fechaSalida.get(Calendar.HOUR)-fechaIngreso.get(Calendar.HOUR))*60;
-	minutos /= 10;
-	total = minutos*0.25;
     }
 
     @Override
