@@ -6,6 +6,8 @@
 package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorTicket;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -50,7 +52,7 @@ public class VentanaListarTickets extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Codigo", "Ingreso", "Salida", "Total", "Cedula", "Nombre", "Direccion", "Telefono", "Placa", "Marca", "Direccion"
+                "Codigo", "Ingreso", "Salida", "Total", "Cedula", "Nombre", "Direccion", "Telefono", "Placa", "Marca", "Modelo"
             }
         ) {
             Class[] types = new Class [] {
@@ -88,4 +90,18 @@ public class VentanaListarTickets extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
+
+    void cambiarIdioma(Locale localizacion, ResourceBundle mensajes) {
+	jTable1.getColumnModel().getColumn(0).setHeaderValue(mensajes.getString("ticketsCodigo"));
+	jTable1.getColumnModel().getColumn(1).setHeaderValue(mensajes.getString("listaIngreso"));
+	jTable1.getColumnModel().getColumn(2).setHeaderValue(mensajes.getString("listaISalida"));
+	jTable1.getColumnModel().getColumn(3).setHeaderValue(mensajes.getString("listaTotal"));
+	jTable1.getColumnModel().getColumn(4).setHeaderValue(mensajes.getString("clientesCédula"));
+	jTable1.getColumnModel().getColumn(5).setHeaderValue(mensajes.getString("clientesNombre"));
+	jTable1.getColumnModel().getColumn(6).setHeaderValue(mensajes.getString("clientesDirección"));
+	jTable1.getColumnModel().getColumn(7).setHeaderValue(mensajes.getString("clientesTeléfono"));
+	jTable1.getColumnModel().getColumn(8).setHeaderValue(mensajes.getString("vehiculosPlaca"));
+	jTable1.getColumnModel().getColumn(9).setHeaderValue(mensajes.getString("vehiculosMarca"));
+	jTable1.getColumnModel().getColumn(10).setHeaderValue(mensajes.getString("vehiculosModelo"));
+    }
 }

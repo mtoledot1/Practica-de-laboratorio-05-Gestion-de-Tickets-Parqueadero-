@@ -7,6 +7,8 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorCliente;
 import ec.edu.ups.controlador.ControladorVehiculo;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -26,7 +28,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
 	this.controladorCliente = controladorCliente;
 	this.controladorVehiculo = controladorVehiculo;
 	controladorCliente.verClientes((DefaultTableModel)tablaClientes.getModel());
-	btnEntrada.setEnabled(false);
+	btnRegistrar.setEnabled(false);
 	setTitle("Registro de Vehículo");
     }
 
@@ -55,7 +57,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
         lblModelo = new javax.swing.JLabel();
         txtMarca = new javax.swing.JTextField();
         txtModelo = new javax.swing.JTextField();
-        btnEntrada = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         btnCliente = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtPlaca = new javax.swing.JFormattedTextField();
@@ -108,10 +110,10 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
 
         lblModelo.setText("Modelo");
 
-        btnEntrada.setText("Registrar");
-        btnEntrada.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEntradaActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
 
@@ -148,7 +150,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
                         .addGap(52, 52, 52)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(layout.createSequentialGroup()
-                                .addComponent(btnEntrada)
+                                .addComponent(btnRegistrar)
                                 .addGap(58, 58, 58)
                                 .addComponent(btnCancelar))
                             .addGroup(layout.createSequentialGroup()
@@ -186,7 +188,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
                     .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEntrada)
+                    .addComponent(btnRegistrar)
                     .addComponent(btnCancelar))
                 .addGap(84, 84, 84)
                 .addComponent(btnCliente)
@@ -202,7 +204,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
 	ventanaPrincipal.getRegistroIngreso().show();
     }//GEN-LAST:event_formInternalFrameClosed
 
-    private void btnEntradaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntradaActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         String placa = txtPlaca.getText();
 	String modelo = txtModelo.getText();
 	String marca = txtMarca.getText();
@@ -211,7 +213,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
 	JOptionPane.showMessageDialog(this, "Vehiculo Registrado", "Registro", JOptionPane.INFORMATION_MESSAGE);
 	limpiar();
 	ventanaPrincipal.getRegistroIngreso().actualizar();
-    }//GEN-LAST:event_btnEntradaActionPerformed
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         /*limpiar();
@@ -229,7 +231,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
     private void tablaClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaClientesMouseClicked
         if(evt.getClickCount() == 2 && !evt.isConsumed()){
 	    evt.consume();
-	    btnEntrada.setEnabled(true);
+	    btnRegistrar.setEnabled(true);
 	}
     }//GEN-LAST:event_tablaClientesMouseClicked
 
@@ -246,7 +248,7 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnCliente;
-    private javax.swing.JButton btnEntrada;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblMarca;
     private javax.swing.JLabel lblModelo;
@@ -256,4 +258,18 @@ public class VentanaRegistroVehiculo extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtModelo;
     private javax.swing.JFormattedTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
+
+    void cambiarIdioma(Locale localizacion, ResourceBundle mensajes) {
+	lblMarca.setText(mensajes.getString("lblMarca"));
+	lblModelo.setText(mensajes.getString("lblModelo"));
+	lblPlaca.setText(mensajes.getString("lblPlaca"));
+	tablaClientes.getColumnModel().getColumn(0).setHeaderValue(mensajes.getString("clientesCédula"));
+	tablaClientes.getColumnModel().getColumn(1).setHeaderValue(mensajes.getString("clientesNombre"));
+	tablaClientes.getColumnModel().getColumn(2).setHeaderValue(mensajes.getString("clientesDirección"));
+	tablaClientes.getColumnModel().getColumn(3).setHeaderValue(mensajes.getString("clientesTeléfono"));
+	btnCancelar.setText(mensajes.getString("btnCancelar"));
+	btnRegistrar.setText(mensajes.getString("btnRegistrar"));
+	btnCliente.setText(mensajes.getString("btnCliente"));
+	setTitle(mensajes.getString("btnRegistrarVehiculo"));
+    }
 }

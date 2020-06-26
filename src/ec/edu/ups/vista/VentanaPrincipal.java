@@ -9,6 +9,8 @@ import ec.edu.ups.dao.VehiculoDAO;
 import ec.edu.ups.idao.IClienteDAO;
 import ec.edu.ups.idao.ITicketDAO;
 import ec.edu.ups.idao.IVehiculoDAO;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JDesktopPane;
 
 public class VentanaPrincipal extends javax.swing.JFrame {
@@ -27,6 +29,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private VentanaRegistroSalida registroSalida;
     private VentanaRegistroVehiculo registroVehiculo;
     private VentanaListarTickets listarTickets;
+    
+    private Locale localizacion;
+    private ResourceBundle mensajes;
     
     public VentanaPrincipal() {
 	initComponents();
@@ -78,8 +83,28 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	desktopPane.add(registroVehiculo);
 	desktopPane.add(listarTickets);
 	
-	setTitle("Parqueadero");
+	localizacion = new Locale("es","EC");
+	mensajes = ResourceBundle.getBundle("ec.edu.ups.idiomas.mensajes", localizacion);
+	
 	setSize(700, 600);
+	cambiarIdioma();
+    }
+    
+    public void cambiarIdioma(){
+	menuInicio.setText(mensajes.getString("menuInicio"));
+	menuIdioma.setText(mensajes.getString("menuIdioma"));
+	exitMenuItem.setText(mensajes.getString("exitMenuItem"));
+	menuItemEspanol.setText(mensajes.getString("menuItemEspanol"));
+	menuItemIngles.setText(mensajes.getString("menuItemIngles"));
+	menuItemListar.setText(mensajes.getString("menuItemListar"));
+	menuItemRegistrar.setText(mensajes.getString("menuItemRegistrar"));
+	registrarTickets.cambiarIdioma(localizacion, mensajes);
+	registroCliente.cambiarIdioma(localizacion, mensajes);
+	registroIngreso.cambiarIdioma(localizacion, mensajes);
+	registroSalida.cambiarIdioma(localizacion, mensajes);
+	registroVehiculo.cambiarIdioma(localizacion, mensajes);
+	listarTickets.cambiarIdioma(localizacion, mensajes);
+	setTitle(mensajes.getString("tituloPrincipal"));
     }
 
     public VentanaRegistrarTickets getRegistrarTickets() {
@@ -136,36 +161,36 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 
         desktopPane = new javax.swing.JDesktopPane();
         menuBar = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
-        openMenuItem = new javax.swing.JMenuItem();
-        saveMenuItem = new javax.swing.JMenuItem();
+        menuInicio = new javax.swing.JMenu();
+        menuItemRegistrar = new javax.swing.JMenuItem();
+        menuItemListar = new javax.swing.JMenuItem();
         exitMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
-        cutMenuItem = new javax.swing.JMenuItem();
-        copyMenuItem = new javax.swing.JMenuItem();
+        menuIdioma = new javax.swing.JMenu();
+        menuItemEspanol = new javax.swing.JMenuItem();
+        menuItemIngles = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        fileMenu.setMnemonic('f');
-        fileMenu.setText("Inicio");
+        menuInicio.setMnemonic('f');
+        menuInicio.setText("Inicio");
 
-        openMenuItem.setMnemonic('o');
-        openMenuItem.setText("Registrar Ticket");
-        openMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        menuItemRegistrar.setMnemonic('o');
+        menuItemRegistrar.setText("Registrar Ticket");
+        menuItemRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                openMenuItemActionPerformed(evt);
+                menuItemRegistrarActionPerformed(evt);
             }
         });
-        fileMenu.add(openMenuItem);
+        menuInicio.add(menuItemRegistrar);
 
-        saveMenuItem.setMnemonic('s');
-        saveMenuItem.setText("Listar Tickets");
-        saveMenuItem.addActionListener(new java.awt.event.ActionListener() {
+        menuItemListar.setMnemonic('s');
+        menuItemListar.setText("Listar Tickets");
+        menuItemListar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                saveMenuItemActionPerformed(evt);
+                menuItemListarActionPerformed(evt);
             }
         });
-        fileMenu.add(saveMenuItem);
+        menuInicio.add(menuItemListar);
 
         exitMenuItem.setMnemonic('x');
         exitMenuItem.setText("Salir");
@@ -174,22 +199,32 @@ public class VentanaPrincipal extends javax.swing.JFrame {
                 exitMenuItemActionPerformed(evt);
             }
         });
-        fileMenu.add(exitMenuItem);
+        menuInicio.add(exitMenuItem);
 
-        menuBar.add(fileMenu);
+        menuBar.add(menuInicio);
 
-        editMenu.setMnemonic('e');
-        editMenu.setText("Idioma");
+        menuIdioma.setMnemonic('e');
+        menuIdioma.setText("Idioma");
 
-        cutMenuItem.setMnemonic('t');
-        cutMenuItem.setText("Inglés");
-        editMenu.add(cutMenuItem);
+        menuItemEspanol.setMnemonic('t');
+        menuItemEspanol.setText("Inglés");
+        menuItemEspanol.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemEspanolActionPerformed(evt);
+            }
+        });
+        menuIdioma.add(menuItemEspanol);
 
-        copyMenuItem.setMnemonic('y');
-        copyMenuItem.setText("Español");
-        editMenu.add(copyMenuItem);
+        menuItemIngles.setMnemonic('y');
+        menuItemIngles.setText("Español");
+        menuItemIngles.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                menuItemInglesActionPerformed(evt);
+            }
+        });
+        menuIdioma.add(menuItemIngles);
 
-        menuBar.add(editMenu);
+        menuBar.add(menuIdioma);
 
         setJMenuBar(menuBar);
 
@@ -211,18 +246,30 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	System.exit(0);
     }//GEN-LAST:event_exitMenuItemActionPerformed
 
-    private void openMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openMenuItemActionPerformed
+    private void menuItemRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemRegistrarActionPerformed
 	desktopPane.remove(registrarTickets);
 	desktopPane.add(registrarTickets);
 	registrarTickets.setVisible(true);
-    }//GEN-LAST:event_openMenuItemActionPerformed
+    }//GEN-LAST:event_menuItemRegistrarActionPerformed
 
-    private void saveMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveMenuItemActionPerformed
+    private void menuItemListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemListarActionPerformed
         desktopPane.remove(listarTickets);
 	desktopPane.add(listarTickets);
 	listarTickets.actualizar();
 	listarTickets.setVisible(true);
-    }//GEN-LAST:event_saveMenuItemActionPerformed
+    }//GEN-LAST:event_menuItemListarActionPerformed
+
+    private void menuItemEspanolActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemEspanolActionPerformed
+        localizacion = new Locale("es","EC");
+	mensajes = ResourceBundle.getBundle("ec.edu.ups.idiomas.mensajes", localizacion);
+	cambiarIdioma();
+    }//GEN-LAST:event_menuItemEspanolActionPerformed
+
+    private void menuItemInglesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_menuItemInglesActionPerformed
+        localizacion = new Locale("en","UK");
+	mensajes = ResourceBundle.getBundle("ec.edu.ups.idiomas.mensajes", localizacion);
+	cambiarIdioma();
+    }//GEN-LAST:event_menuItemInglesActionPerformed
 
     /**
      * @param args the command line arguments
@@ -260,15 +307,15 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JMenuItem copyMenuItem;
-    private javax.swing.JMenuItem cutMenuItem;
     private javax.swing.JDesktopPane desktopPane;
-    private javax.swing.JMenu editMenu;
     private javax.swing.JMenuItem exitMenuItem;
-    private javax.swing.JMenu fileMenu;
     private javax.swing.JMenuBar menuBar;
-    private javax.swing.JMenuItem openMenuItem;
-    private javax.swing.JMenuItem saveMenuItem;
+    private javax.swing.JMenu menuIdioma;
+    private javax.swing.JMenu menuInicio;
+    private javax.swing.JMenuItem menuItemEspanol;
+    private javax.swing.JMenuItem menuItemIngles;
+    private javax.swing.JMenuItem menuItemListar;
+    private javax.swing.JMenuItem menuItemRegistrar;
     // End of variables declaration//GEN-END:variables
 
 }

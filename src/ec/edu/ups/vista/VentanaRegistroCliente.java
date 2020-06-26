@@ -6,6 +6,8 @@
 package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorCliente;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 /**
@@ -43,7 +45,7 @@ public class VentanaRegistroCliente extends javax.swing.JInternalFrame {
         txtCedula = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtDireccion = new javax.swing.JTextField();
-        bntRegistrar = new javax.swing.JButton();
+        btnRegistrar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtTelefono = new javax.swing.JFormattedTextField();
 
@@ -74,10 +76,10 @@ public class VentanaRegistroCliente extends javax.swing.JInternalFrame {
 
         lblTelefono.setText("Teléfono");
 
-        bntRegistrar.setText("Registrar");
-        bntRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrar.setText("Registrar");
+        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntRegistrarActionPerformed(evt);
+                btnRegistrarActionPerformed(evt);
             }
         });
 
@@ -102,7 +104,7 @@ public class VentanaRegistroCliente extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGap(60, 60, 60)
-                        .addComponent(bntRegistrar))
+                        .addComponent(btnRegistrar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(73, 73, 73)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -143,7 +145,7 @@ public class VentanaRegistroCliente extends javax.swing.JInternalFrame {
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 80, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntRegistrar)
+                    .addComponent(btnRegistrar)
                     .addComponent(btnCancelar))
                 .addGap(32, 32, 32))
         );
@@ -151,7 +153,7 @@ public class VentanaRegistroCliente extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void bntRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntRegistrarActionPerformed
+    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
         String cedula = txtCedula.getText();
 	String nombre = txtNombre.getText();
 	String direccion = txtDireccion.getText();
@@ -160,7 +162,7 @@ public class VentanaRegistroCliente extends javax.swing.JInternalFrame {
 	JOptionPane.showMessageDialog(this, "Cliente Registrado", "Registro", JOptionPane.INFORMATION_MESSAGE);
 	limpiar();
 	ventanaPrincipal.getRegistroVehiculo().actualizar();
-    }//GEN-LAST:event_bntRegistrarActionPerformed
+    }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 	dispose();
@@ -180,8 +182,8 @@ public class VentanaRegistroCliente extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntRegistrar;
     private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnRegistrar;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblNombre;
@@ -191,4 +193,14 @@ public class VentanaRegistroCliente extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JFormattedTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+
+    void cambiarIdioma(Locale localizacion, ResourceBundle mensajes) {
+	lblCedula.setText(mensajes.getString("lblCedula"));
+	lblDireccion.setText(mensajes.getString("lblDireccion"));
+	lblNombre.setText(mensajes.getString("lblNombre"));
+	lblTelefono.setText(mensajes.getString("lblTelefono"));
+	btnCancelar.setText(mensajes.getString("btnCancelar"));
+	btnRegistrar.setText(mensajes.getString("btnRegistrar"));
+	setTitle(mensajes.getString("btnCliente"));
+    }
 }

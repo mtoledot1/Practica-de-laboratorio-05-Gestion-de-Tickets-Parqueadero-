@@ -9,6 +9,8 @@ import ec.edu.ups.controlador.ControladorTicket;
 import ec.edu.ups.modelo.Ticket;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 
 /**
@@ -79,7 +81,7 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
         txtSalida = new javax.swing.JTextField();
         txtTotal = new javax.swing.JTextField();
         txtFracciones = new javax.swing.JTextField();
-        bntAceptar = new javax.swing.JButton();
+        btnAceptar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtTelefono = new javax.swing.JFormattedTextField();
         txtPlaca = new javax.swing.JFormattedTextField();
@@ -127,10 +129,10 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
 
         lblFracciones.setText("Fracciones");
 
-        bntAceptar.setText("Aceptar");
-        bntAceptar.addActionListener(new java.awt.event.ActionListener() {
+        btnAceptar.setText("Aceptar");
+        btnAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                bntAceptarActionPerformed(evt);
+                btnAceptarActionPerformed(evt);
             }
         });
 
@@ -177,7 +179,7 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(bntAceptar)
+                            .addComponent(btnAceptar)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(lblCedula)
@@ -254,7 +256,7 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
                     .addComponent(txtFracciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(bntAceptar)
+                    .addComponent(btnAceptar)
                     .addComponent(btnCancelar))
                 .addGap(27, 27, 27))
         );
@@ -267,12 +269,12 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
 	dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    private void bntAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bntAceptarActionPerformed
+    private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
 	JOptionPane.showMessageDialog(this, "Se ha registrado la salida del vehículo", "Salida de Vehículo", JOptionPane.INFORMATION_MESSAGE);
 	salida = 1;
 	dispose();
-    }//GEN-LAST:event_bntAceptarActionPerformed
+    }//GEN-LAST:event_btnAceptarActionPerformed
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
         limpiar();
@@ -296,7 +298,7 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton bntAceptar;
+    private javax.swing.JButton btnAceptar;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCodigo;
@@ -323,4 +325,23 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtTelefono;
     private javax.swing.JTextField txtTotal;
     // End of variables declaration//GEN-END:variables
+
+    void cambiarIdioma(Locale localizacion, ResourceBundle mensajes) {
+	lblCedula.setText(mensajes.getString("lblCedula"));
+	lblCodigo.setText(mensajes.getString("lblCodigo"));
+	lblDireccion.setText(mensajes.getString("lblDireccion"));
+	lblFracciones.setText(mensajes.getString("lblFracciones"));
+	lblIngreso.setText(mensajes.getString("lblIngreso"));
+	lblMarca.setText(mensajes.getString("lblMarca"));
+	lblModelo.setText(mensajes.getString("lblModelo"));
+	lblNombre.setText(mensajes.getString("lblNombre"));
+	lblPlaca.setText(mensajes.getString("lblPlaca"));
+	lblSalida.setText(mensajes.getString("lblSalida"));
+	lblTelefono.setText(mensajes.getString("lblTelefono"));
+	lblTotal.setText(mensajes.getString("lblTotal"));
+	btnCancelar.setText(mensajes.getString("btnCancelar"));
+	btnAceptar.setText(mensajes.getString("btnAceptar"));
+	setTitle(mensajes.getString("btnSalida"));
+    }
+
 }

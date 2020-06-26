@@ -10,6 +10,8 @@ import ec.edu.ups.controlador.ControladorVehiculo;
 import ec.edu.ups.modelo.Vehiculo;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -77,7 +79,7 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
         txtDireccion = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
         txtModelo = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        btnRegistrarVehiculo = new javax.swing.JButton();
         txtTelefono = new javax.swing.JFormattedTextField();
         txtPlaca = new javax.swing.JFormattedTextField();
 
@@ -173,10 +175,10 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 
         txtModelo.setEditable(false);
 
-        jButton1.setText("Registrar Vehículo");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnRegistrarVehiculo.setText("Registrar Vehículo");
+        btnRegistrarVehiculo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnRegistrarVehiculoActionPerformed(evt);
             }
         });
 
@@ -232,7 +234,7 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1)
+                        .addComponent(btnRegistrarVehiculo)
                         .addGap(93, 93, 93)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -289,7 +291,7 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
                     .addComponent(btnRegistrar)
                     .addComponent(btnCancelar))
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(btnRegistrarVehiculo)
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
@@ -340,12 +342,12 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 	}   
     }//GEN-LAST:event_tablaVehiculosMouseClicked
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+    private void btnRegistrarVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarVehiculoActionPerformed
         hide();
 	ventanaPrincipal.getDesktopPane().remove(registroVehiculo);
 	ventanaPrincipal.getDesktopPane().add(registroVehiculo);
 	registroVehiculo.setVisible(true);
-    }//GEN-LAST:event_jButton1ActionPerformed
+    }//GEN-LAST:event_btnRegistrarVehiculoActionPerformed
 
     public void actualizar(){
 	controladorVehiculo.verVehiculos((DefaultTableModel) tablaVehiculos.getModel());
@@ -367,7 +369,7 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnRegistrarVehiculo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCodigo;
@@ -391,4 +393,24 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
     private javax.swing.JFormattedTextField txtPlaca;
     private javax.swing.JFormattedTextField txtTelefono;
     // End of variables declaration//GEN-END:variables
+
+    void cambiarIdioma(Locale localizacion, ResourceBundle mensajes) {
+	lblCedula.setText(mensajes.getString("lblCedula"));
+	lblCodigo.setText(mensajes.getString("lblCodigo"));
+	lblDireccion.setText(mensajes.getString("lblDireccion"));
+	lblFecha.setText(mensajes.getString("lblFecha"));
+	lblHora.setText(mensajes.getString("lblHora"));
+	lblMarca.setText(mensajes.getString("lblMarca"));
+	lblModelo.setText(mensajes.getString("lblModelo"));
+	lblNombre.setText(mensajes.getString("lblNombre"));
+	lblPlaca.setText(mensajes.getString("lblPlaca"));
+	lblTelefono.setText(mensajes.getString("lblTelefono"));
+	tablaVehiculos.getColumnModel().getColumn(0).setHeaderValue(mensajes.getString("vehiculosPlaca"));
+	tablaVehiculos.getColumnModel().getColumn(1).setHeaderValue(mensajes.getString("vehiculosMarca"));
+	tablaVehiculos.getColumnModel().getColumn(2).setHeaderValue(mensajes.getString("vehiculosModelo"));
+	btnCancelar.setText(mensajes.getString("btnCancelar"));
+	btnRegistrar.setText(mensajes.getString("btnRegistrar"));
+	btnRegistrarVehiculo.setText(mensajes.getString("btnRegistrarVehiculo"));
+	setTitle(mensajes.getString("btnIngreso"));
+    }
 }

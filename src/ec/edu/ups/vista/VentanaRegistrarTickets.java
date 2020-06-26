@@ -10,6 +10,8 @@ import ec.edu.ups.modelo.Ticket;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
+import java.util.Locale;
+import java.util.ResourceBundle;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -308,4 +310,22 @@ public class VentanaRegistrarTickets extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtNombre;
     private javax.swing.JFormattedTextField txtPlaca;
     // End of variables declaration//GEN-END:variables
+
+    void cambiarIdioma(Locale localizacion, ResourceBundle mensajes) {
+	lblCedula.setText(mensajes.getString("lblCedula"));
+	lblFecha.setText(mensajes.getString("lblFecha"));
+	lblHora.setText(mensajes.getString("lblHora"));
+	lblModelo.setText(mensajes.getString("lblModelo"));
+	lblNombre.setText(mensajes.getString("lblNombre"));
+	lblPlaca.setText(mensajes.getString("lblPlaca"));
+	tablaTickets.getColumnModel().getColumn(0).setHeaderValue(mensajes.getString("ticketsCodigo"));
+	tablaTickets.getColumnModel().getColumn(1).setHeaderValue(mensajes.getString("vehiculosPlaca"));
+	tablaTickets.getColumnModel().getColumn(2).setHeaderValue(mensajes.getString("vehiculosModelo"));
+	tablaTickets.getColumnModel().getColumn(3).setHeaderValue(mensajes.getString("clientesCédula"));
+	tablaTickets.getColumnModel().getColumn(4).setHeaderValue(mensajes.getString("clientesNombre"));
+	btnIngreso.setText(mensajes.getString("btnIngreso"));
+	btnCancelar.setText(mensajes.getString("btnCancelar"));
+	btnSalida.setText(mensajes.getString("btnSalida"));
+	setTitle(mensajes.getString("menuItemRegistrar"));
+    }
 }
