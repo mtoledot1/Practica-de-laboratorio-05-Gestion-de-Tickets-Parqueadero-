@@ -22,6 +22,7 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
     private ControladorTicket controladorTicket;
     private VentanaPrincipal ventanaPrincipal;
     private int salida = 0;
+    private ResourceBundle mensajes;
     
     public VentanaRegistroSalida(ControladorTicket controladorTicket) {
 	initComponents();
@@ -271,7 +272,9 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
 
     private void btnAceptarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAceptarActionPerformed
         // TODO add your handling code here:
-	JOptionPane.showMessageDialog(this, "Se ha registrado la salida del vehículo", "Salida de Vehículo", JOptionPane.INFORMATION_MESSAGE);
+	String titulo = mensajes.getString("salidaVehiculo");
+	String mensaje = mensajes.getString("registroSalida");
+	JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
 	salida = 1;
 	dispose();
     }//GEN-LAST:event_btnAceptarActionPerformed
@@ -327,6 +330,7 @@ public class VentanaRegistroSalida extends javax.swing.JInternalFrame {
     // End of variables declaration//GEN-END:variables
 
     void cambiarIdioma(Locale localizacion, ResourceBundle mensajes) {
+	this.mensajes = mensajes;
 	lblCedula.setText(mensajes.getString("lblCedula"));
 	lblCodigo.setText(mensajes.getString("lblCodigo"));
 	lblDireccion.setText(mensajes.getString("lblDireccion"));

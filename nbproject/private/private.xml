@@ -3,16 +3,8 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/idao/IClienteDAO.java</file>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/controlador/ControladorCliente.java</file>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/dao/TicketDAO.java</file>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/dao/VehiculoDAO.java</file>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/controlador/ControladorVehiculo.java</file>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/modelo/Cliente.java</file>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/controlador/ControladorTicket.java</file>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/modelo/Vehiculo.java</file>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/dao/ClienteDAO.java</file>
-            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/modelo/Ticket.java</file>
+            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/idiomas/mensajes_es_EC.properties</file>
+            <file>file:/home/tano/NetBeansProjects/Parqueadero/src/ec/edu/ups/vista/VentanaGestionCliente.java</file>
         </group>
     </open-files>
 </project-private>

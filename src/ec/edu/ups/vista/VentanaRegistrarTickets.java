@@ -24,24 +24,21 @@ public class VentanaRegistrarTickets extends javax.swing.JInternalFrame {
     private VentanaRegistroIngreso registroIngreso;
     private VentanaRegistroSalida registroSalida;
     private ControladorTicket controladorTicket;
-    private DateFormat dia;
-    private DateFormat hora;
+    private VentanaGestionTicket gestionTicket;
 
     public VentanaRegistrarTickets(ControladorTicket controladorTicket) {
 	initComponents();
 	this.controladorTicket = controladorTicket;
-	dia = new SimpleDateFormat("yyyy/MM/dd");
-	hora = new SimpleDateFormat("HH:mm");
 	btnSalida.setEnabled(false);
 	controladorTicket.verTicketsVehiculo((DefaultTableModel) tablaTickets.getModel());
 	setSize(650, 500);
-	setTitle("Tickets");
     }
     
     public void setVentanaPrincipal(VentanaPrincipal ventanaPrincipal){
 	this.ventanaPrincipal = ventanaPrincipal;
 	registroIngreso = ventanaPrincipal.getRegistroIngreso();
 	registroSalida = ventanaPrincipal.getRegistroSalida();
+	gestionTicket = ventanaPrincipal.getGestionTicket();
     }
 
     /**
@@ -253,9 +250,9 @@ public class VentanaRegistrarTickets extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_btnIngresoActionPerformed
 
     private void tablaTicketsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaTicketsMouseClicked
-        if(evt.getClickCount() == 2 && !evt.isConsumed()){
+        int codigo = (int) tablaTickets.getValueAt(tablaTickets.getSelectedRow(), 0);
+	if(evt.getClickCount() == 1 && !evt.isConsumed()){
 	    evt.consume();
-	    int codigo = (int) tablaTickets.getValueAt(tablaTickets.getSelectedRow(), 0);
 	    Ticket ticket = controladorTicket.verTicket(codigo);
 	    txtPlaca.setValue(ticket.getVehiculo().getPlaca());
 	    txtModelo.setText(ticket.getVehiculo().getModelo());
@@ -264,6 +261,13 @@ public class VentanaRegistrarTickets extends javax.swing.JInternalFrame {
 	    txtFecha.setText(ticket.getFechaIngreso().format(DateTimeFormatter.ISO_LOCAL_DATE));
 	    txtHora.setText(ticket.getFechaIngreso().format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 	    btnSalida.setEnabled(true);
+	}else if(evt.getClickCount() == 2 && !evt.isConsumed()){
+	    evt.consume();
+	    ventanaPrincipal.getDesktopPane().remove(gestionTicket);
+	    ventanaPrincipal.getDesktopPane().add(gestionTicket);
+	    gestionTicket.setTabla((DefaultTableModel) tablaTickets.getModel());
+	    gestionTicket.datos(codigo);
+	    gestionTicket.setVisible(true);
 	}
     }//GEN-LAST:event_tablaTicketsMouseClicked
 

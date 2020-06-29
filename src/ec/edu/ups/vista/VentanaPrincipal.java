@@ -29,6 +29,9 @@ public class VentanaPrincipal extends javax.swing.JFrame {
     private VentanaRegistroSalida registroSalida;
     private VentanaRegistroVehiculo registroVehiculo;
     private VentanaListarTickets listarTickets;
+    private VentanaGestionCliente gestionCliente;
+    private VentanaGestionTicket gestionTicket;
+    private VentanaGestionVehiculo gestionVehiculo;
     
     private Locale localizacion;
     private ResourceBundle mensajes;
@@ -69,12 +72,18 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	registroSalida = new VentanaRegistroSalida(controladorTicket);
 	registroVehiculo = new VentanaRegistroVehiculo(controladorCliente, controladorVehiculo);
 	listarTickets = new VentanaListarTickets(controladorTicket);
+	gestionCliente = new VentanaGestionCliente(controladorCliente);
+	gestionVehiculo = new VentanaGestionVehiculo(controladorCliente, controladorVehiculo);
+	gestionTicket = new VentanaGestionTicket(controladorTicket, controladorVehiculo);
 	
 	registrarTickets.setVentanaPrincipal(this);
 	registroCliente.setVentanaPrincipal(this);
 	registroIngreso.setVentanaPrincipal(this);
 	registroSalida.setVentanaPrincipal(this);
 	registroVehiculo.setVentanaPrincipal(this);
+	gestionCliente.setVentanaPrincipal(this);
+	gestionVehiculo.setVentanaPrincipal(this);
+	gestionTicket.setVentanaPrincipal(this);
 	
 	desktopPane.add(registroCliente);
 	desktopPane.add(registrarTickets);
@@ -82,12 +91,27 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	desktopPane.add(registroSalida);
 	desktopPane.add(registroVehiculo);
 	desktopPane.add(listarTickets);
+	desktopPane.add(gestionCliente);
+	desktopPane.add(gestionVehiculo);
+	desktopPane.add(gestionTicket);
 	
 	localizacion = new Locale("es","EC");
 	mensajes = ResourceBundle.getBundle("ec.edu.ups.idiomas.mensajes", localizacion);
 	
 	setSize(700, 600);
 	cambiarIdioma();
+    }
+
+    public VentanaGestionCliente getGestionCliente() {
+	return gestionCliente;
+    }
+
+    public VentanaGestionTicket getGestionTicket() {
+	return gestionTicket;
+    }
+
+    public VentanaGestionVehiculo getGestionVehiculo() {
+	return gestionVehiculo;
     }
     
     public void cambiarIdioma(){
@@ -111,48 +135,25 @@ public class VentanaPrincipal extends javax.swing.JFrame {
 	return registrarTickets;
     }
 
-    public void setRegistrarTickets(VentanaRegistrarTickets registrarTickets) {
-	this.registrarTickets = registrarTickets;
-    }
 
     public VentanaRegistroIngreso getRegistroIngreso() {
 	return registroIngreso;
-    }
-
-    public void setRegistroIngreso(VentanaRegistroIngreso registroIngreso) {
-	this.registroIngreso = registroIngreso;
     }
 
     public VentanaRegistroSalida getRegistroSalida() {
 	return registroSalida;
     }
 
-    public void setRegistroSalida(VentanaRegistroSalida registroSalida) {
-	this.registroSalida = registroSalida;
-    }
-
     public VentanaRegistroVehiculo getRegistroVehiculo() {
 	return registroVehiculo;
-    }
-
-    public void setRegistroVehiculo(VentanaRegistroVehiculo registroVehiculo) {
-	this.registroVehiculo = registroVehiculo;
     }
 
     public VentanaRegistroCliente getRegistroCliente() {
 	return registroCliente;
     }
 
-    public void setRegistroCliente(VentanaRegistroCliente registroCliente) {
-	this.registroCliente = registroCliente;
-    }
-
     public JDesktopPane getDesktopPane() {
 	return desktopPane;
-    }
-
-    public void setDesktopPane(JDesktopPane desktopPane) {
-	this.desktopPane = desktopPane;
     }
 
     @SuppressWarnings("unchecked")

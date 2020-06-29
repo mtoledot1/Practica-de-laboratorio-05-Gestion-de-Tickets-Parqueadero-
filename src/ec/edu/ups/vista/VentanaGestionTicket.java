@@ -7,6 +7,7 @@ package ec.edu.ups.vista;
 
 import ec.edu.ups.controlador.ControladorTicket;
 import ec.edu.ups.controlador.ControladorVehiculo;
+import ec.edu.ups.modelo.Ticket;
 import ec.edu.ups.modelo.Vehiculo;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -19,32 +20,33 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author tano
  */
-public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
+public class VentanaGestionTicket extends javax.swing.JInternalFrame {
     
     private ControladorTicket controladorTicket;
     private ControladorVehiculo controladorVehiculo;
     private VentanaPrincipal ventanaPrincipal;
-    private VentanaRegistroVehiculo registroVehiculo;
     private VentanaGestionVehiculo gestionVehiculo;
+    private DefaultTableModel tabla;
+    private int codigo;
     private ResourceBundle mensajes;
     
-    public VentanaRegistroIngreso(ControladorTicket controladorTicket, ControladorVehiculo controladorVehiculo) {
+    public VentanaGestionTicket(ControladorTicket controladorTicket, ControladorVehiculo controladorVehiculo) {
 	initComponents();
 	this.controladorTicket = controladorTicket;
 	this.controladorVehiculo = controladorVehiculo;
-	LocalDateTime tiempo = LocalDateTime.now();
-	txtFecha.setText(tiempo.format(DateTimeFormatter.ISO_LOCAL_DATE));
-	txtHora.setText(tiempo.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-	btnRegistrar.setEnabled(false);
 	controladorVehiculo.verVehiculos((DefaultTableModel) tablaVehiculos.getModel());
-	txtCodigo.setText(controladorTicket.listarTickets().size()+"");
     }
     
     public void setVentanaPrincipal(VentanaPrincipal ventanaPrincipal){
 	this.ventanaPrincipal = ventanaPrincipal;
-	registroVehiculo = ventanaPrincipal.getRegistroVehiculo();
 	gestionVehiculo = ventanaPrincipal.getGestionVehiculo();
     }
+
+    public void setTabla(DefaultTableModel tabla) {
+	this.tabla = tabla;
+    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -62,8 +64,8 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
             }
         };
         lblCodigo = new javax.swing.JLabel();
-        lblFecha = new javax.swing.JLabel();
-        lblHora = new javax.swing.JLabel();
+        lblFechaEnt = new javax.swing.JLabel();
+        lblFechaSal = new javax.swing.JLabel();
         lblCedula = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblDireccion = new javax.swing.JLabel();
@@ -71,17 +73,17 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
         lblPlaca = new javax.swing.JLabel();
         lblMarca = new javax.swing.JLabel();
         lblModelo = new javax.swing.JLabel();
-        btnRegistrar = new javax.swing.JButton();
+        btnActualizar = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         txtCodigo = new javax.swing.JTextField();
-        txtFecha = new javax.swing.JTextField();
-        txtHora = new javax.swing.JTextField();
+        txtFechaEnt = new javax.swing.JTextField();
+        txtFechaSal = new javax.swing.JTextField();
         txtCedula = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
         txtDireccion = new javax.swing.JTextField();
         txtMarca = new javax.swing.JTextField();
         txtModelo = new javax.swing.JTextField();
-        btnRegistrarVehiculo = new javax.swing.JButton();
+        btnBorrar = new javax.swing.JButton();
         txtTelefono = new javax.swing.JFormattedTextField();
         txtPlaca = new javax.swing.JFormattedTextField();
 
@@ -129,9 +131,9 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 
         lblCodigo.setText("Codigo");
 
-        lblFecha.setText("Fecha");
+        lblFechaEnt.setText("Fecha Entrada");
 
-        lblHora.setText("Hora");
+        lblFechaSal.setText("Fecha Salida");
 
         lblCedula.setText("Cédula");
 
@@ -147,10 +149,10 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 
         lblModelo.setText("Modelo");
 
-        btnRegistrar.setText("Registrar");
-        btnRegistrar.addActionListener(new java.awt.event.ActionListener() {
+        btnActualizar.setText("Actualizar");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarActionPerformed(evt);
+                btnActualizarActionPerformed(evt);
             }
         });
 
@@ -163,9 +165,9 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 
         txtCodigo.setEditable(false);
 
-        txtFecha.setEditable(false);
+        txtFechaEnt.setEditable(false);
 
-        txtHora.setEditable(false);
+        txtFechaSal.setEditable(false);
 
         txtCedula.setEditable(false);
 
@@ -177,10 +179,10 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 
         txtModelo.setEditable(false);
 
-        btnRegistrarVehiculo.setText("Registrar Vehículo");
-        btnRegistrarVehiculo.addActionListener(new java.awt.event.ActionListener() {
+        btnBorrar.setText("Borrar");
+        btnBorrar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRegistrarVehiculoActionPerformed(evt);
+                btnBorrarActionPerformed(evt);
             }
         });
 
@@ -203,11 +205,11 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(69, 69, 69)
+                        .addGap(42, 42, 42)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(lblCodigo)
-                            .addComponent(lblFecha)
-                            .addComponent(lblHora)
+                            .addComponent(lblFechaEnt)
+                            .addComponent(lblFechaSal)
                             .addComponent(lblCedula)
                             .addComponent(lblNombre)
                             .addComponent(lblDireccion)
@@ -215,29 +217,29 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
                             .addComponent(lblPlaca)
                             .addComponent(lblMarca)
                             .addComponent(lblModelo))
-                        .addGap(31, 31, 31)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtCodigo)
-                            .addComponent(txtFecha)
-                            .addComponent(txtHora)
+                            .addComponent(txtFechaEnt)
+                            .addComponent(txtFechaSal)
                             .addComponent(txtCedula)
                             .addComponent(txtNombre)
                             .addComponent(txtDireccion)
                             .addComponent(txtMarca)
                             .addComponent(txtModelo)
                             .addComponent(txtPlaca)
-                            .addComponent(txtTelefono, javax.swing.GroupLayout.DEFAULT_SIZE, 151, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(56, 56, 56)
-                        .addComponent(btnRegistrar)
-                        .addGap(18, 116, Short.MAX_VALUE)
-                        .addComponent(btnCancelar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(36, 36, 36))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnRegistrarVehiculo)
-                        .addGap(93, 93, 93)))
+                        .addComponent(btnCancelar)
+                        .addGap(130, 130, 130))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(56, 56, 56)
+                        .addComponent(btnActualizar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnBorrar)
+                        .addGap(61, 61, 61)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 368, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -254,12 +256,12 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
                     .addComponent(txtCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblFecha)
-                    .addComponent(txtFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblFechaEnt)
+                    .addComponent(txtFechaEnt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblHora)
-                    .addComponent(txtHora, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lblFechaSal)
+                    .addComponent(txtFechaSal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCedula)
@@ -290,40 +292,32 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
                     .addComponent(txtModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(34, 34, 34)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnRegistrar)
-                    .addComponent(btnCancelar))
+                    .addComponent(btnActualizar)
+                    .addComponent(btnBorrar))
                 .addGap(18, 18, 18)
-                .addComponent(btnRegistrarVehiculo)
+                .addComponent(btnCancelar)
                 .addContainerGap(38, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
-        int codigo = Integer.parseInt(txtCodigo.getText());
-	LocalDateTime fecha = LocalDateTime.now();
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+	Ticket t = controladorTicket.verTicket(codigo);
 	String placa = txtPlaca.getText();
-	controladorTicket.registrarEntrada(codigo, fecha, placa);
-	String titulo = mensajes.getString("registro");
-	String mensaje = mensajes.getString("ingresoVehiculo");
+	controladorTicket.actualizar(codigo, t.getFechaIngreso(), t.getFechaSalida(), placa);
+	String titulo = mensajes.getString("mensajeDatosActualizados");
+	String mensaje = "Ticket" + mensajes.getString("mensajeActualizado");
 	JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
-	limpiar();
-	LocalDateTime tiempo = LocalDateTime.now();
-	txtCodigo.setText(controladorTicket.listarTickets().size()+"");
-	txtFecha.setText(tiempo.format(DateTimeFormatter.ISO_LOCAL_DATE));
-	txtHora.setText(tiempo.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
-	ventanaPrincipal.getRegistrarTickets().actualizar(0);
-    }//GEN-LAST:event_btnRegistrarActionPerformed
+	controladorTicket.verTickets(tabla);
+    }//GEN-LAST:event_btnActualizarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
 	dispose();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void formInternalFrameClosed(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameClosed
-        limpiar();
-	ventanaPrincipal.getRegistrarTickets().actualizar(0);
-	ventanaPrincipal.getRegistrarTickets().show();
+	controladorTicket.verTickets(tabla);
     }//GEN-LAST:event_formInternalFrameClosed
 
     private void tablaVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tablaVehiculosMouseClicked
@@ -331,10 +325,6 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 	if(evt.getClickCount() == 1 && !evt.isConsumed()){
 	    evt.consume();
 	    Vehiculo vehiculo = controladorVehiculo.verVehiculo(placa);
-	    LocalDateTime tiempo = LocalDateTime.now();
-	    txtCodigo.setText(controladorTicket.listarTickets().size()+"");
-	    txtFecha.setText(tiempo.format(DateTimeFormatter.ISO_LOCAL_DATE));
-	    txtHora.setText(tiempo.format(DateTimeFormatter.ofPattern("HH:mm:ss")));
 	    txtPlaca.setText(vehiculo.getPlaca());
 	    txtMarca.setText(vehiculo.getMarca());
 	    txtModelo.setText(vehiculo.getModelo());
@@ -342,51 +332,53 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 	    txtNombre.setText(vehiculo.getPropietario().getNombre());
 	    txtDireccion.setText(vehiculo.getPropietario().getDireccion());
 	    txtTelefono.setValue(vehiculo.getPropietario().getTelefono());
-	    btnRegistrar.setEnabled(true);
 	}else if(evt.getClickCount() == 2 && !evt.isConsumed()){
 	    evt.consume();
 	    ventanaPrincipal.getDesktopPane().remove(gestionVehiculo);
 	    ventanaPrincipal.getDesktopPane().add(gestionVehiculo);
-	    gestionVehiculo.datos(placa);
 	    gestionVehiculo.setTabla((DefaultTableModel) tablaVehiculos.getModel());
+	    gestionVehiculo.datos(placa);
 	    gestionVehiculo.setVisible(true);
 	}
     }//GEN-LAST:event_tablaVehiculosMouseClicked
 
-    private void btnRegistrarVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarVehiculoActionPerformed
-        hide();
-	ventanaPrincipal.getDesktopPane().remove(registroVehiculo);
-	ventanaPrincipal.getDesktopPane().add(registroVehiculo);
-	registroVehiculo.setVisible(true);
-    }//GEN-LAST:event_btnRegistrarVehiculoActionPerformed
-
-    public void actualizar(){
-	controladorVehiculo.verVehiculos((DefaultTableModel) tablaVehiculos.getModel());
-    }
+    private void btnBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBorrarActionPerformed
+	controladorTicket.eliminar(codigo);
+	String titulo = mensajes.getString("mensajeDatosEliminados");
+	String mensaje = "Ticket" + mensajes.getString("mensajeEliminado");
+	JOptionPane.showMessageDialog(this, mensaje, titulo, JOptionPane.INFORMATION_MESSAGE);
+	controladorTicket.verTickets(tabla);
+	dispose();
+    }//GEN-LAST:event_btnBorrarActionPerformed
     
-    public void limpiar(){
-	txtCedula.setText("");
-	txtCodigo.setText("");
-	txtDireccion.setText("");
-	txtFecha.setText("");
-	txtHora.setText("");
-	txtMarca.setText("");
-	txtModelo.setText("");
-	txtNombre.setText("");
-	txtPlaca.setText("");
-	txtTelefono.setText("");
+    public void datos(int num){
+	codigo = num;
+	Ticket t = controladorTicket.verTicket(num);
+	txtCodigo.setText(num+"");
+	txtFechaEnt.setText(t.getFechaIngreso().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+	if(t.getFechaSalida() == null)
+	    txtFechaSal.setText("");
+	else
+	    txtFechaSal.setText(t.getFechaSalida().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+	txtPlaca.setText(t.getVehiculo().getPlaca());
+	txtMarca.setText(t.getVehiculo().getMarca());
+	txtModelo.setText(t.getVehiculo().getModelo());
+	txtCedula.setText(t.getVehiculo().getPropietario().getCedula());
+	txtNombre.setText(t.getVehiculo().getPropietario().getNombre());
+	txtDireccion.setText(t.getVehiculo().getPropietario().getDireccion());
+	txtTelefono.setValue(t.getVehiculo().getPropietario().getTelefono());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnBorrar;
     private javax.swing.JButton btnCancelar;
-    private javax.swing.JButton btnRegistrar;
-    private javax.swing.JButton btnRegistrarVehiculo;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblDireccion;
-    private javax.swing.JLabel lblFecha;
-    private javax.swing.JLabel lblHora;
+    private javax.swing.JLabel lblFechaEnt;
+    private javax.swing.JLabel lblFechaSal;
     private javax.swing.JLabel lblMarca;
     private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblNombre;
@@ -396,8 +388,8 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtCodigo;
     private javax.swing.JTextField txtDireccion;
-    private javax.swing.JTextField txtFecha;
-    private javax.swing.JTextField txtHora;
+    private javax.swing.JTextField txtFechaEnt;
+    private javax.swing.JTextField txtFechaSal;
     private javax.swing.JTextField txtMarca;
     private javax.swing.JTextField txtModelo;
     private javax.swing.JTextField txtNombre;
@@ -410,8 +402,8 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 	lblCedula.setText(mensajes.getString("lblCedula"));
 	lblCodigo.setText(mensajes.getString("lblCodigo"));
 	lblDireccion.setText(mensajes.getString("lblDireccion"));
-	lblFecha.setText(mensajes.getString("lblFecha"));
-	lblHora.setText(mensajes.getString("lblHora"));
+	lblFechaEnt.setText(mensajes.getString("lblIngreso"));
+	lblFechaSal.setText(mensajes.getString("lblSalida"));
 	lblMarca.setText(mensajes.getString("lblMarca"));
 	lblModelo.setText(mensajes.getString("lblModelo"));
 	lblNombre.setText(mensajes.getString("lblNombre"));
@@ -421,8 +413,8 @@ public class VentanaRegistroIngreso extends javax.swing.JInternalFrame {
 	tablaVehiculos.getColumnModel().getColumn(1).setHeaderValue(mensajes.getString("vehiculosMarca"));
 	tablaVehiculos.getColumnModel().getColumn(2).setHeaderValue(mensajes.getString("vehiculosModelo"));
 	btnCancelar.setText(mensajes.getString("btnCancelar"));
-	btnRegistrar.setText(mensajes.getString("btnRegistrar"));
-	btnRegistrarVehiculo.setText(mensajes.getString("btnRegistrarVehiculo"));
-	setTitle(mensajes.getString("btnIngreso"));
+	btnActualizar.setText(mensajes.getString("btnActualizar"));
+	btnBorrar.setText(mensajes.getString("btnBorrar"));
+	setTitle(mensajes.getString("tituloTicket"));
     }
 }
